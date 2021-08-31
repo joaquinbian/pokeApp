@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from '../screens/HomeScreen';
-import PokeFavsScreens from '../screens/PokeFavsScreens';
+import PokeDetailScreen from '../screens/PokeDetailScreen';
 
 const Stack = createStackNavigator();
 const StackNavigator = () => {
@@ -13,7 +13,7 @@ const StackNavigator = () => {
         // headerStyle: {},
       }}>
       <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="FavPokemons" component={PokeFavsScreens} />
+      <Stack.Screen name="FavPokemons" component={PokeDetailScreen} />
     </Stack.Navigator>
   );
 };

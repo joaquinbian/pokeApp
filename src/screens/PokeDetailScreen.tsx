@@ -1,14 +1,14 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
-const PokeFavsScreens = () => {
+const PokeDetailScreen = () => {
   return (
     <View>
-      <Text>favs pokemons screen</Text>
+      <Text>detail pokemon screen</Text>
     </View>
   );
 };
 
-export default PokeFavsScreens;
+export default PokeDetailScreen;
 
 const styles = StyleSheet.create({});
