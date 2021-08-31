@@ -9,6 +9,8 @@ const StackNavigator = () => {
     <Stack.Navigator
       screenOptions={{
         headerTitleAlign: 'center',
+        headerShown: false,
+        cardStyle: {backgroundColor: '#fff'},
         // headerMode: 'screen'<,
         // headerStyle: {},
       }}>
