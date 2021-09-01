@@ -9,3 +9,9 @@ export interface Result {
   name: string;
   url: string;
 }
+export interface SimplePokemon {
+  name: string;
+  id: string;
+  picture: string;
+  color?: string;
+}

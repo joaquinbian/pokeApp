@@ -4,19 +4,13 @@ import {StackScreenProps} from '@react-navigation/stack';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {Image} from 'react-native-elements/dist/image/Image';
 import {usePokemons} from '../hooks/usePokemons';
-import {Result} from '../interfaces/pokemonsInterface';
+import {Result, SimplePokemon} from '../interfaces/pokemonsInterface';
 
 interface Props extends StackScreenProps<any, any> {}
 
 const HomeScreen = ({navigation}: Props) => {
   const {top} = useSafeAreaInsets();
-  const {poke_list, getPokemons} = usePokemons();
-  const [pokemonsList, setPokemonsList] = useState<Result[]>([]);
-
-  useEffect(() => {
-    getPokemons();
-    setPokemonsList(poke_list!);
-  }, []);
+  const {getPokemons, simplePokemons} = usePokemons();
 
   const renderItem = (name: string) => {
     return (
@@ -37,8 +31,9 @@ const HomeScreen = ({navigation}: Props) => {
       <View style={{marginTop: top + 10, marginHorizontal: 15}}>
         <Text>Pokedex</Text>
         <FlatList
-          data={pokemonsList}
-          renderItem={({item}: {item: Result}) => renderItem(item.name)}
+          data={simplePokemons}
+          renderItem={({item}: {item: SimplePokemon}) => renderItem(item.name)}
+          keyExtractor={item => item.id}
         />
       </View>
     </View>
