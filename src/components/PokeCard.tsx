@@ -1,24 +1,33 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, Pressable} from 'react-native';
 import {SimplePokemon} from '../interfaces/pokemonsInterface';
 import {poke_api} from '../api/index';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useNavigation} from '@react-navigation/native';
 
 interface Props {
   pokemon: SimplePokemon;
 }
 const PokeCard = ({pokemon}: Props) => {
   const {name, id, color, picture} = pokemon;
+  const navigation = useNavigation();
   return (
     <View style={styles.pokeContainer}>
-      <Text
-        style={{
-          fontWeight: 'bold',
-          fontSize: 20,
-          marginHorizontal: 10,
-        }}>
-        {name}
-      </Text>
-      <Image source={{uri: picture}} style={styles.pokeImg} />
+      <TouchableOpacity
+        activeOpacity={0.7}
+        //se lo mandamos asi porque los params se pasan en un obj, entonces directamente
+        //le pasamos todo el obj del pokemon
+        onPress={() => navigation.navigate('DetailPokemon', pokemon)}>
+        <Text
+          style={{
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginHorizontal: 10,
+          }}>
+          {name}
+        </Text>
+        <Image source={{uri: picture}} style={styles.pokeImg} />
+      </TouchableOpacity>
     </View>
   );
 };
