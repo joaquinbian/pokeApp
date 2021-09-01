@@ -1,23 +1,26 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, FlatList} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  ActivityIndicator,
+} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {Image} from 'react-native-elements/dist/image/Image';
 import {usePokemons} from '../hooks/usePokemons';
 import {Result, SimplePokemon} from '../interfaces/pokemonsInterface';
+import PokeCard from '../components/PokeCard';
 
 interface Props extends StackScreenProps<any, any> {}
 
 const HomeScreen = ({navigation}: Props) => {
   const {top} = useSafeAreaInsets();
-  const {getPokemons, simplePokemons} = usePokemons();
+  const {getPokemons, simplePokemons, isLoading} = usePokemons();
 
-  const renderItem = (name: string) => {
-    return (
-      <View>
-        <Text>{name}</Text>
-      </View>
-    );
+  const loadPokemons = () => {
+    getPokemons();
   };
 
   return (
@@ -29,11 +32,33 @@ const HomeScreen = ({navigation}: Props) => {
         />
       </View>
       <View style={{marginTop: top + 10, marginHorizontal: 15}}>
-        <Text>Pokedex</Text>
         <FlatList
           data={simplePokemons}
-          renderItem={({item}: {item: SimplePokemon}) => renderItem(item.name)}
+          renderItem={({item}: {item: SimplePokemon}) => (
+            <PokeCard pokemon={item} />
+          )}
           keyExtractor={item => item.id}
+          onEndReachedThreshold={0.5}
+          onEndReached={loadPokemons}
+          showsVerticalScrollIndicator={false}
+          ItemSeparatorComponent={() => <View style={{marginBottom: 15}} />}
+          ListHeaderComponent={() => <Text style={styles.title}>Pokedex</Text>}
+          ListFooterComponent={() => {
+            return (
+              <View
+                style={{
+                  height: 30,
+                  alignItems: 'center',
+                }}>
+                {isLoading ? <ActivityIndicator color="red" size={25} /> : null}
+              </View>
+            );
+          }}
+          numColumns={2}
+          columnWrapperStyle={{
+            justifyContent: 'space-around',
+          }}
+          progressViewOffset={3}
         />
       </View>
     </View>
@@ -52,5 +77,10 @@ const styles = StyleSheet.create({
     height: 300,
     width: 300,
     opacity: 0.4,
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 30,
+    marginVertical: 10,
   },
 });

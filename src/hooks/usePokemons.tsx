@@ -12,15 +12,13 @@ export const usePokemons = () => {
   //hacemos la peticion guardamos la referencia a la proxima url, y como lo hacemos
   //con ref, no hace una re-rendereizacion del componente, y luego cuando llamamos
   //de nuevo al hook, ya queda la proxima
-  const [poke_list, setPoke_list] = useState<Result[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [simplePokemons, setSimplePokemons] = useState<SimplePokemon[]>([]);
 
   const getPokemons = async () => {
-    console.log('me ejecuto');
-
+    setIsLoading(true);
     const pokeList = await poke_api.get<PokemonsList>(nextPage.current);
     nextPage.current = pokeList.data.next;
-    setPoke_list(pokeList.data.results);
     mapPokemonList(pokeList.data.results);
   };
 
@@ -37,7 +35,10 @@ export const usePokemons = () => {
         name: p.name,
       };
     });
-    setSimplePokemons([...simplePokemons, ...newPokeArr]);
+    setTimeout(() => {
+      setSimplePokemons([...simplePokemons, ...newPokeArr]);
+      setIsLoading(false);
+    }, 2000);
   };
 
   useEffect(() => {
@@ -46,7 +47,7 @@ export const usePokemons = () => {
 
   return {
     getPokemons,
-    poke_list,
     simplePokemons,
+    isLoading,
   };
 };
