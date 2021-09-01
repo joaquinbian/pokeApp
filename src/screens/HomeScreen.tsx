@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   pokebolaImg: {
     height: 300,
     width: 300,
-    opacity: 0.4,
+    opacity: 0.1,
   },
   title: {
     fontWeight: 'bold',

@@ -42,40 +42,59 @@ const PokeDetailScreen = ({route, navigation}: Props) => {
     <ScrollView style={{marginTop: top + 10, marginHorizontal: 10}}>
       <Text>detail pokemon screen</Text>
       <Image source={{uri: picture}} style={{width: 300, height: 300}} />
-      <Text>{name}</Text>
-      {isLoading ? (
-        <ActivityIndicator size={25} color="red" />
-      ) : (
-        <Text>{pokemonDetail?.height}</Text>
-      )}
-      <Text style={styles.title}>Sprites</Text>
-      <ScrollView horizontal>
-        {pokemonDetail?.sprites.map((s, i) => {
-          return (
-            <Image
-              key={i}
-              source={{uri: s}}
-              style={{width: 100, height: 100}}
-            />
-          );
-        })}
-      </ScrollView>
+      <Text style={{...styles.title, fontSize: 30}}>{name}</Text>
 
-      <Text style={styles.title}>Habilities</Text>
+      <View>
+        <View style={styles.sectionContainer}>
+          <Text style={styles.title}>Height</Text>
+          <Text>{pokemonDetail?.height}</Text>
+        </View>
+        <View style={styles.sectionContainer}>
+          <Text style={styles.title}>Sprites</Text>
+          <ScrollView horizontal>
+            {pokemonDetail?.sprites.map((s, i) => {
+              return (
+                <Image
+                  key={i}
+                  source={{uri: s}}
+                  style={{width: 100, height: 100}}
+                />
+              );
+            })}
+          </ScrollView>
+        </View>
+        <View style={styles.sectionContainer}>
+          <Text style={styles.title}>Habilities</Text>
 
-      <ScrollView>
-        {pokemonDetail?.abilities.map((h, i) => {
-          return <Text key={i}>{h.ability.name}</Text>;
-        })}
-      </ScrollView>
-      <Text style={styles.title}>Moves</Text>
-      <Text>{pokemonDetail?.moves.join(', ')}</Text>
-      <Text style={styles.title}>Stats</Text>
-      {pokemonDetail?.stats.map((s, i) => StatsList(s.stat.name, s.base_stat))}
+          <ScrollView>
+            {pokemonDetail?.abilities.map((h, i) => {
+              return <Text key={i}>{h.ability.name}</Text>;
+            })}
+          </ScrollView>
+        </View>
+        <View style={styles.sectionContainer}>
+          <Text style={styles.title}>Moves</Text>
+          <Text>{pokemonDetail?.moves.join(', ')}</Text>
+        </View>
+        <View style={styles.sectionContainer}>
+          <Text style={styles.title}>Stats</Text>
+          {pokemonDetail?.stats.map((s, i) =>
+            StatsList(s.stat.name, s.base_stat),
+          )}
+        </View>
+      </View>
     </ScrollView>
   );
 };
 
 export default PokeDetailScreen;
 
-const styles = StyleSheet.create({title: {fontWeight: 'bold', fontSize: 20}});
+const styles = StyleSheet.create({
+  title: {
+    fontWeight: 'bold',
+    fontSize: 20,
+  },
+  sectionContainer: {
+    marginVertical: 10,
+  },
+});
