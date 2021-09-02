@@ -1,23 +1,35 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image, Pressable} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Pressable,
+  useWindowDimensions,
+} from 'react-native';
 import {SimplePokemon} from '../interfaces/pokemonsInterface';
-import {poke_api} from '../api/index';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
+import FadeImage from './FadeImage';
 
 interface Props {
   pokemon: SimplePokemon;
 }
 const PokeCard = ({pokemon}: Props) => {
   const {name, id, color, picture} = pokemon;
+
+  const width = useWindowDimensions().width * 0.4;
+
   const navigation = useNavigation();
+
   return (
-    <View style={styles.pokeContainer}>
-      <TouchableOpacity
-        activeOpacity={0.7}
-        //se lo mandamos asi porque los params se pasan en un obj, entonces directamente
-        //le pasamos todo el obj del pokemon
-        onPress={() => navigation.navigate('DetailPokemon', pokemon)}>
+    <TouchableOpacity
+      activeOpacity={0.7}
+      //se lo mandamos asi porque los params se pasan en un obj, entonces directamente
+      //le pasamos todo el obj del pokemon
+      onPress={() => navigation.navigate('DetailPokemon', pokemon)}
+      style={{...styles.pokeContainer, width}}>
+      <View style={{flex: 1, zIndex: -2}}>
         <Text
           style={{
             fontWeight: 'bold',
@@ -26,9 +38,12 @@ const PokeCard = ({pokemon}: Props) => {
           }}>
           {name}
         </Text>
-        <Image source={{uri: picture}} style={styles.pokeImg} />
-      </TouchableOpacity>
-    </View>
+        {/* <View style={{position: 'absolute'}}> */}
+        {/* <Image source={{uri: picture}} style={styles.pokeImg} /> */}
+        <FadeImage uri={picture} style={styles.pokeImg} />
+        {/* </View> */}
+      </View>
+    </TouchableOpacity>
   );
 };
 
@@ -36,8 +51,13 @@ export default PokeCard;
 
 const styles = StyleSheet.create({
   pokeImg: {
-    width: 100,
-    height: 100,
+    width: 120,
+    height: 120,
+    position: 'absolute',
+    top: -20,
+    left: 40,
+    // zIndex: 5000,
+    zIndex: 500,
   },
   pokeContainer: {
     backgroundColor: 'transparent',
@@ -45,6 +65,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 15,
     // marginVertical: 20,
-    width: '45%',
+    width: 140,
+
+    position: 'relative',
+    height: 120,
+    zIndex: -4,
   },
 });

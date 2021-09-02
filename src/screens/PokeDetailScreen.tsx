@@ -12,6 +12,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import usePokemonDetail from '../hooks/usePokemonDetail';
 import {RootStackParams} from '../navigator/StackNavigator';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 interface Props extends StackScreenProps<RootStackParams, 'DetailPokemon'> {}
 
@@ -20,6 +21,8 @@ const PokeDetailScreen = ({route, navigation}: Props) => {
   const pokemon = route.params;
   const {id, name, picture} = pokemon;
   const {pokemonDetail, isLoading} = usePokemonDetail(id);
+
+  console.log(pokemonDetail?.moves);
 
   const StatsList = (name: string, stat: number) => {
     return (
@@ -65,16 +68,39 @@ const PokeDetailScreen = ({route, navigation}: Props) => {
         </View>
         <View style={styles.sectionContainer}>
           <Text style={styles.title}>Habilities</Text>
-
-          <ScrollView>
-            {pokemonDetail?.abilities.map((h, i) => {
-              return <Text key={i}>{h.ability.name}</Text>;
-            })}
-          </ScrollView>
+          {pokemonDetail?.abilities.map((h, i) => {
+            return (
+              <View
+                key={i}
+                style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Icon name="chevron-forward-outline" size={20} />
+                <Text>{h.ability.name}</Text>
+              </View>
+            );
+          })}
         </View>
-        <View style={styles.sectionContainer}>
+        <View
+          style={{
+            ...styles.sectionContainer,
+          }}>
           <Text style={styles.title}>Moves</Text>
-          <Text>{pokemonDetail?.moves.join(', ')}</Text>
+
+          <View style={styles.movesContainer}>
+            {pokemonDetail?.moves.map((m, i) => {
+              return (
+                <View
+                  key={i}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    width: '50%',
+                  }}>
+                  <Icon name="chevron-forward-outline" size={20} />
+                  <Text>{m}</Text>
+                </View>
+              );
+            })}
+          </View>
         </View>
         <View style={styles.sectionContainer}>
           <Text style={styles.title}>Stats</Text>
@@ -96,5 +122,9 @@ const styles = StyleSheet.create({
   },
   sectionContainer: {
     marginVertical: 10,
+  },
+  movesContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
 });
