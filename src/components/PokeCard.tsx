@@ -26,10 +26,12 @@ const PokeCard = ({pokemon}: Props) => {
         <View>
           <Text style={styles.name}>{pokemon.name}</Text>
         </View>
-        <Image
-          source={require('../assets/pokebola-blanca.png')}
-          style={styles.imagePokebola}
-        />
+        <View style={styles.imagePokebolaContainer}>
+          <Image
+            source={require('../assets/pokebola-blanca.png')}
+            style={styles.imagePokebola}
+          />
+        </View>
         <FadeImage uri={pokemon.picture} style={styles.pokeImg} />
       </View>
     </TouchableOpacity>
@@ -46,6 +48,16 @@ const styles = StyleSheet.create({
     width: 140,
     backgroundColor: 'red',
     borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+
+    elevation: 6,
+    // overflow: 'hidden',
   },
   name: {
     color: '#fff',
@@ -53,12 +65,22 @@ const styles = StyleSheet.create({
     fontSize: 17,
     right: -10,
   },
+  imagePokebolaContainer: {
+    backgroundColor: 'transparent',
+    height: 90,
+    width: 90,
+    right: 0,
+    bottom: 0,
+    position: 'absolute',
+    overflow: 'hidden',
+  },
+
   imagePokebola: {
     width: 90,
     height: 90,
     opacity: 0.6,
     position: 'absolute',
-    top: 50,
+    top: 20,
     right: -20,
   },
   pokeImg: {
