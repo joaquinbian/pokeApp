@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Image,
   StyleSheet,
@@ -8,8 +8,10 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
+import ImageColors from 'react-native-image-colors';
 import {SimplePokemon} from '../interfaces/pokemonsInterface';
 import FadeImage from './FadeImage';
+import {getColors} from '../helpers/getColors';
 
 interface Props {
   pokemon: SimplePokemon;
@@ -18,11 +20,45 @@ interface Props {
 const PokeCard = ({pokemon}: Props) => {
   const {width} = useWindowDimensions();
   const navigation = useNavigation();
+  const [bgColor, setBgColor] = useState('');
+
+  const isMounted = useRef<boolean>(true);
+  //por defecto es true, porque si se construye es porque esta montado
+
+  const getImageColors = async () => {
+    const {color} = await getColors(pokemon.picture);
+    setBgColor(color || 'gray');
+  };
+
+  useEffect(() => {
+    //si el componente no esta montado, que retorne
+    if (!isMounted) return;
+    isMounted.current = true;
+
+    // ImageColors.getColors(pokemon.picture, {}).then(colors => {
+    //   if (colors.platform === 'android') {
+    //     setBgColor(colors.dominant || 'gray');
+    //   } else if (colors.platform === 'ios') {
+    //     setBgColor(colors.background || 'gray');
+    //   }
+    // });
+
+    //esta funcion se ejecuta cuando el componente se desmonta
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
   return (
     <TouchableOpacity
       activeOpacity={0.8}
       onPress={() => navigation.navigate('DetailPokemon', pokemon)}>
-      <View style={{...styles.cardContainer, width: width * 0.4}}>
+      <View
+        style={{
+          ...styles.cardContainer,
+          width: width * 0.4,
+          backgroundColor: bgColor,
+        }}>
         <View>
           <Text style={styles.name}>{pokemon.name}</Text>
         </View>
