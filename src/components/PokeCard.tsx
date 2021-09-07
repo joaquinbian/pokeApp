@@ -1,47 +1,36 @@
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {
+  Image,
   StyleSheet,
   Text,
-  View,
-  Image,
-  Pressable,
+  TouchableOpacity,
   useWindowDimensions,
+  View,
 } from 'react-native';
 import {SimplePokemon} from '../interfaces/pokemonsInterface';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {useNavigation} from '@react-navigation/native';
 import FadeImage from './FadeImage';
 
 interface Props {
   pokemon: SimplePokemon;
 }
+
 const PokeCard = ({pokemon}: Props) => {
-  const {name, id, color, picture} = pokemon;
-
-  const width = useWindowDimensions().width * 0.4;
-
+  const {width} = useWindowDimensions();
   const navigation = useNavigation();
-
   return (
     <TouchableOpacity
-      activeOpacity={0.7}
-      //se lo mandamos asi porque los params se pasan en un obj, entonces directamente
-      //le pasamos todo el obj del pokemon
-      onPress={() => navigation.navigate('DetailPokemon', pokemon)}
-      style={{...styles.pokeContainer, width}}>
-      <View style={{flex: 1, zIndex: -2}}>
-        <Text
-          style={{
-            fontWeight: 'bold',
-            fontSize: 20,
-            marginHorizontal: 10,
-          }}>
-          {name}
-        </Text>
-        {/* <View style={{position: 'absolute'}}> */}
-        {/* <Image source={{uri: picture}} style={styles.pokeImg} /> */}
-        <FadeImage uri={picture} style={styles.pokeImg} />
-        {/* </View> */}
+      activeOpacity={0.8}
+      onPress={() => navigation.navigate('DetailPokemon', pokemon)}>
+      <View style={{...styles.cardContainer, width: width * 0.4}}>
+        <View>
+          <Text style={styles.name}>{pokemon.name}</Text>
+        </View>
+        <Image
+          source={require('../assets/pokebola-blanca.png')}
+          style={styles.imagePokebola}
+        />
+        <FadeImage uri={pokemon.picture} style={styles.pokeImg} />
       </View>
     </TouchableOpacity>
   );
@@ -50,25 +39,33 @@ const PokeCard = ({pokemon}: Props) => {
 export default PokeCard;
 
 const styles = StyleSheet.create({
-  pokeImg: {
-    width: 120,
+  cardContainer: {
+    // marginHorizontal: 20,
+    marginBottom: 20,
     height: 120,
-    position: 'absolute',
-    top: -20,
-    left: 40,
-    // zIndex: 5000,
-    zIndex: 500,
-  },
-  pokeContainer: {
-    backgroundColor: 'transparent',
-    borderColor: 'rgba(0,0,0,.3)',
-    borderWidth: 1,
-    borderRadius: 15,
-    // marginVertical: 20,
     width: 140,
-
-    position: 'relative',
-    height: 120,
-    zIndex: -4,
+    backgroundColor: 'red',
+    borderRadius: 10,
+  },
+  name: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 17,
+    right: -10,
+  },
+  imagePokebola: {
+    width: 90,
+    height: 90,
+    opacity: 0.6,
+    position: 'absolute',
+    top: 50,
+    right: -20,
+  },
+  pokeImg: {
+    width: 110,
+    height: 110,
+    position: 'absolute',
+    right: 25,
+    top: 10,
   },
 });

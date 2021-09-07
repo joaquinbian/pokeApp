@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,6 +7,7 @@ import {
   ImageStyle,
   StyleProp,
   Animated,
+  ActivityIndicator,
 } from 'react-native';
 import useFadeIn from '../hooks/useFadeIn';
 
@@ -14,19 +15,24 @@ interface Props {
   uri: string;
   style: StyleProp<ImageStyle>;
 }
-const FadeImage = ({uri, style}: Props) => {
-  const {fadeIn, opacity} = useFadeIn();
+const FadeImage = ({uri, style = {}}: Props) => {
+  const {fadeIn, opacity, position, startMoving} = useFadeIn();
+  const [isLoading, setIsLoading] = useState(true);
+
   const setImageLoaded = () => {
+    setIsLoading(false);
     fadeIn();
+    startMoving(-50);
   };
   return (
-    <View>
+    <Animated.View style={{top: position, ...(style as any)}}>
+      {isLoading && <ActivityIndicator color="red" size={25} />}
       <Animated.Image
         onLoadEnd={setImageLoaded}
         style={{...(style as any), opacity}}
         source={{uri}}
       />
-    </View>
+    </Animated.View>
   );
 };
 
