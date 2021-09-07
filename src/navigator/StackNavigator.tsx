@@ -6,7 +6,7 @@ import {SimplePokemon} from '../interfaces/pokemonsInterface';
 
 export type RootStackParams = {
   Home: undefined;
-  DetailPokemon: SimplePokemon;
+  DetailPokemon: {pokemon: SimplePokemon; color: string};
 };
 const Stack = createStackNavigator<RootStackParams>();
 const StackNavigator = () => {

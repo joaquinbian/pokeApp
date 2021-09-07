@@ -33,7 +33,7 @@ const PokeCard = ({pokemon}: Props) => {
   useEffect(() => {
     //si el componente no esta montado, que retorne
     if (!isMounted) return;
-    isMounted.current = true;
+    getImageColors();
 
     // ImageColors.getColors(pokemon.picture, {}).then(colors => {
     //   if (colors.platform === 'android') {
@@ -52,7 +52,9 @@ const PokeCard = ({pokemon}: Props) => {
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      onPress={() => navigation.navigate('DetailPokemon', pokemon)}>
+      onPress={() =>
+        navigation.navigate('DetailPokemon', {pokemon, color: bgColor})
+      }>
       <View
         style={{
           ...styles.cardContainer,

@@ -18,11 +18,13 @@ interface Props extends StackScreenProps<RootStackParams, 'DetailPokemon'> {}
 
 const PokeDetailScreen = ({route, navigation}: Props) => {
   const {top} = useSafeAreaInsets();
-  const pokemon = route.params;
+  const {pokemon, color} = route.params;
   const {id, name, picture} = pokemon;
   const {pokemonDetail, isLoading} = usePokemonDetail(id);
 
-  console.log(pokemonDetail?.moves);
+  // console.log(pokemonDetail?.moves);
+
+  console.log(name, color);
 
   interface StatListProps {
     name: string;
