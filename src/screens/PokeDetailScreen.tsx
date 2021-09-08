@@ -8,23 +8,22 @@ import {
   Text,
   View,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {Button} from 'react-native-elements';
 import usePokemonDetail from '../hooks/usePokemonDetail';
 import {RootStackParams} from '../navigator/StackNavigator';
-import Icon from 'react-native-vector-icons/Ionicons';
 
 interface Props extends StackScreenProps<RootStackParams, 'DetailPokemon'> {}
 
 const PokeDetailScreen = ({route, navigation}: Props) => {
   const {top} = useSafeAreaInsets();
-  const {pokemon, color} = route.params;
+  const {pokemon, colorPrimary, colorSecondary} = route.params;
   const {id, name, picture} = pokemon;
   const {pokemonDetail, isLoading} = usePokemonDetail(id);
 
-  // console.log(pokemonDetail?.moves);
-
-  console.log(name, color);
+  console.log(name, colorPrimary);
 
   interface StatListProps {
     name: string;
@@ -58,15 +57,33 @@ const PokeDetailScreen = ({route, navigation}: Props) => {
   };
 
   return (
-    <ScrollView style={{marginTop: top + 10, marginHorizontal: 10}}>
-      <Text>detail pokemon screen</Text>
-      <Image source={{uri: picture}} style={{width: 300, height: 300}} />
-      <Text style={{...styles.title, fontSize: 30}}>{name}</Text>
+    <ScrollView style={{marginTop: top + 10}}>
+      {/* <Text>detail pokemon screen</Text> */}
+      <View style={{backgroundColor: colorPrimary}}>
+        <Button
+          title="Back"
+          buttonStyle={{
+            backgroundColor: colorSecondary,
+            ...styles.btnBackStyle,
+          }}
+          icon={
+            <Icon
+              name="chevron-back-outline"
+              style={{color: '#fff'}}
+              size={20}
+            />
+          }
+          onPress={() => navigation.goBack()}
+        />
+
+        <Image source={{uri: picture}} style={{width: 300, height: 300}} />
+        <Text style={{...styles.title, fontSize: 30}}>{name}</Text>
+      </View>
 
       {!pokemonDetail ? (
         <LoadingPokemons />
       ) : (
-        <View>
+        <View style={{marginHorizontal: 10}}>
           <View style={styles.sectionContainer}>
             <Text style={styles.title}>Height</Text>
             <Text>{pokemonDetail?.height}</Text>
@@ -152,5 +169,12 @@ const styles = StyleSheet.create({
     height: 200,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  btnBackStyle: {
+    width: '30%',
+
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
   },
 });

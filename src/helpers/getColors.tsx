@@ -1,22 +1,25 @@
 import ImageColors from 'react-native-image-colors';
 
 export const getColors = async (uri: string) => {
-  let color;
+  let colorPrimary;
+  let colorSecondary;
 
   try {
     const colors = await ImageColors.getColors(uri, {});
     console.log(colors, 'soy los colores');
 
     if (colors.platform === 'android') {
-      color = colors.dominant;
+      colorPrimary = colors.dominant;
+      colorSecondary = colors.average;
     } else if (colors.platform === 'ios') {
-      color = colors.background;
+      colorPrimary = colors.background;
+      colorSecondary = colors.primary;
     }
   } catch (err) {
     // console.log(err);
   }
 
-  console.log(color, 'soy el color');
+  console.log(colorPrimary, 'soy el color');
 
-  return {color};
+  return {colorPrimary, colorSecondary};
 };
