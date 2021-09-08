@@ -6,6 +6,7 @@ import {
   Image,
   StyleSheet,
   Text,
+  useWindowDimensions,
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -18,7 +19,7 @@ import {RootStackParams} from '../navigator/StackNavigator';
 interface Props extends StackScreenProps<RootStackParams, 'DetailPokemon'> {}
 
 const PokeDetailScreen = ({route, navigation}: Props) => {
-  const {top} = useSafeAreaInsets();
+  const {height, width} = useWindowDimensions();
   const {pokemon, colorPrimary, colorSecondary} = route.params;
   const {id, name, picture} = pokemon;
   const {pokemonDetail, isLoading} = usePokemonDetail(id);
@@ -57,15 +58,28 @@ const PokeDetailScreen = ({route, navigation}: Props) => {
   };
 
   return (
-    <ScrollView style={{marginTop: top + 10}}>
-      {/* <Text>detail pokemon screen</Text> */}
-      <View style={{backgroundColor: colorPrimary}}>
+    <ScrollView>
+      <View
+        style={{
+          backgroundColor: colorPrimary,
+          height: height * 0.5,
+          width,
+          position: 'absolute',
+          borderBottomRightRadius: 1000,
+          borderBottomLeftRadius: 1000,
+        }}
+      />
+      <View
+        style={{
+          ...styles.header,
+        }}>
         <Button
           title="Back"
           buttonStyle={{
             backgroundColor: colorSecondary,
             ...styles.btnBackStyle,
           }}
+          containerStyle={{width: '100%'}}
           icon={
             <Icon
               name="chevron-back-outline"
@@ -153,6 +167,10 @@ const PokeDetailScreen = ({route, navigation}: Props) => {
 export default PokeDetailScreen;
 
 const styles = StyleSheet.create({
+  header: {
+    alignItems: 'center',
+    paddingTop: 10,
+  },
   title: {
     fontWeight: 'bold',
     fontSize: 20,
@@ -172,9 +190,10 @@ const styles = StyleSheet.create({
   },
   btnBackStyle: {
     width: '30%',
-
+    alignSelf: 'flex-start',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
+    marginLeft: 10,
   },
 });
