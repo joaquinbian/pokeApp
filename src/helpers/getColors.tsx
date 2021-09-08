@@ -6,7 +6,6 @@ export const getColors = async (uri: string) => {
 
   try {
     const colors = await ImageColors.getColors(uri, {});
-    console.log(colors, 'soy los colores');
 
     if (colors.platform === 'android') {
       colorPrimary = colors.dominant;
@@ -18,8 +17,6 @@ export const getColors = async (uri: string) => {
   } catch (err) {
     // console.log(err);
   }
-
-  console.log(colorPrimary, 'soy el color');
 
   return {colorPrimary, colorSecondary};
 };
