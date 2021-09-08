@@ -26,16 +26,9 @@ const PokeDetailScreen = ({route, navigation}: Props) => {
   const {pokemonDetail, isLoading} = usePokemonDetail(id);
   const scrollY = useRef(new Animated.ValueXY({x: 0, y: 0}));
 
-  // const translateY = scrollY.current..({
-  //   inputRange: [0, 100],
-  //   outputRange: [-10, 0],
-  //   // extrapolateLeft: 'clamp',
-  //   extrapolateRight: 'clamp',
-  // });
-
   const translateY = scrollY.current.y.interpolate({
     inputRange: [0, height * 0.6, height * 0.7],
-    outputRange: [-100, height * 0.6, height * 0.7],
+    outputRange: [-100, height * 0.6 + 5, height * 0.7 + 5],
   });
 
   interface StatListProps {
@@ -93,8 +86,9 @@ const PokeDetailScreen = ({route, navigation}: Props) => {
           style={{
             // top: translateY,
             // top: -10,
-            // transform: [{translateY}],
-            top: translateY,
+            transform: [{translateY}],
+            // top: translateY,
+            zIndex: 2000,
           }}>
           <HeaderScreen color={colorSecondary} name={name} image={picture} />
         </Animated.View>
