@@ -57,7 +57,7 @@ const PokeDetailScreen = ({route, navigation}: Props) => {
   const LoadingPokemons = () => {
     return (
       <View style={styles.loadingPokemonsContainer}>
-        <ActivityIndicator size={30} color="red" />
+        <ActivityIndicator size={30} color={colorPrimary} />
         <Text>Loading {name} info</Text>
       </View>
     );
@@ -117,12 +117,12 @@ const PokeDetailScreen = ({route, navigation}: Props) => {
           <LoadingPokemons />
         ) : (
           <View>
-            <View style={{marginHorizontal: 10}}>
-              <View style={styles.sectionContainer}>
+            <View>
+              <View style={[styles.sectionContainer, styles.globalMargin]}>
                 <Text style={styles.title}>Height</Text>
                 <Text>{pokemonDetail?.height}</Text>
               </View>
-              <View style={styles.sectionContainer}>
+              <View style={[styles.sectionContainer, styles.globalMargin]}>
                 <Text style={styles.title}>Types</Text>
                 {pokemonDetail?.types.map((t, i) => {
                   return (
@@ -136,7 +136,7 @@ const PokeDetailScreen = ({route, navigation}: Props) => {
                 })}
               </View>
               <View style={styles.sectionContainer}>
-                <Text style={styles.title}>Sprites</Text>
+                <Text style={[styles.title, styles.globalMargin]}>Sprites</Text>
                 <ScrollView horizontal>
                   {pokemonDetail?.sprites.map((s, i) => {
                     return (
@@ -149,7 +149,7 @@ const PokeDetailScreen = ({route, navigation}: Props) => {
                   })}
                 </ScrollView>
               </View>
-              <View style={styles.sectionContainer}>
+              <View style={[styles.sectionContainer, styles.globalMargin]}>
                 <Text style={styles.title}>Habilities</Text>
                 {pokemonDetail?.abilities.map((h, i) => {
                   return (
@@ -168,7 +168,7 @@ const PokeDetailScreen = ({route, navigation}: Props) => {
                 }}>
                 <Text style={styles.title}>Moves</Text>
 
-                <View style={styles.movesContainer}>
+                <View style={[styles.sectionContainer, styles.globalMargin]}>
                   {pokemonDetail?.moves.map((m, i) => {
                     return (
                       <View
@@ -185,7 +185,7 @@ const PokeDetailScreen = ({route, navigation}: Props) => {
                   })}
                 </View>
               </View>
-              <View style={styles.sectionContainer}>
+              <View style={[styles.sectionContainer, styles.globalMargin]}>
                 <Text style={styles.title}>Stats</Text>
                 {pokemonDetail?.stats.map((s, i) => (
                   <StatsList name={s.stat.name} stat={s.base_stat} key={i} />
@@ -246,5 +246,8 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
 
     elevation: 7,
+  },
+  globalMargin: {
+    marginHorizontal: 10,
   },
 });
