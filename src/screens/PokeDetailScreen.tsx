@@ -137,13 +137,19 @@ const PokeDetailScreen = ({route, navigation}: Props) => {
               </View>
               <View style={styles.sectionContainer}>
                 <Text style={[styles.title, styles.globalMargin]}>Sprites</Text>
-                <ScrollView horizontal>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                   {pokemonDetail?.sprites.map((s, i) => {
                     return (
                       <FadeImage
                         key={i}
                         uri={s}
-                        style={{width: 100, height: 100}}
+                        style={{
+                          width: 100,
+                          height: 100,
+                          backgroundColor: colorPrimary,
+                          borderRadius: 50,
+                          marginHorizontal: 5,
+                        }}
                       />
                     );
                   })}
