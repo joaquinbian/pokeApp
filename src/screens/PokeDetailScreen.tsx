@@ -122,6 +122,19 @@ const PokeDetailScreen = ({route, navigation}: Props) => {
                 <Text>{pokemonDetail?.height}</Text>
               </View>
               <View style={styles.sectionContainer}>
+                <Text style={styles.title}>Types</Text>
+                {pokemonDetail.types.map((t, i) => {
+                  return (
+                    <View
+                      key={i}
+                      style={{flexDirection: 'row', alignItems: 'center'}}>
+                      <Icon name="chevron-forward-outline" size={20} />
+                      <Text>{t.type.name}</Text>
+                    </View>
+                  );
+                })}
+              </View>
+              <View style={styles.sectionContainer}>
                 <Text style={styles.title}>Sprites</Text>
                 <ScrollView horizontal>
                   {pokemonDetail?.sprites.map((s, i) => {

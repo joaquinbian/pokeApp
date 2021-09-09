@@ -26,7 +26,6 @@ const PokeCard = ({pokemon}: Props) => {
   });
 
   const {primary, secondary} = colors;
-
   const isMounted = useRef<boolean>(true);
   //por defecto es true, porque si se construye es porque esta montado
 
@@ -47,6 +46,8 @@ const PokeCard = ({pokemon}: Props) => {
 
     //esta funcion se ejecuta cuando el componente se desmonta
     return () => {
+      console.log('me desmonto');
+
       isMounted.current = false;
     };
   }, []);

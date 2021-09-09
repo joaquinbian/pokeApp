@@ -12,8 +12,10 @@ export const usePokemons = () => {
   //hacemos la peticion guardamos la referencia a la proxima url, y como lo hacemos
   //con ref, no hace una re-rendereizacion del componente, y luego cuando llamamos
   //de nuevo al hook, ya queda la proxima
+
   const [isLoading, setIsLoading] = useState(false);
   const [simplePokemons, setSimplePokemons] = useState<SimplePokemon[]>([]);
+  const isMounted = useRef(true);
 
   const getPokemons = async () => {
     setIsLoading(true);
@@ -25,7 +27,7 @@ export const usePokemons = () => {
   const mapPokemonList = (pokeList: Result[]) => {
     const newPokeArr: SimplePokemon[] = pokeList.map(p => {
       const urlArr = p.url.split('/');
-      console.log(urlArr[urlArr.length - 2], 'a');
+      // console.log(urlArr[urlArr.length - 2], 'a');
       const id = urlArr[urlArr.length - 2];
 
       const picture = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
@@ -42,7 +44,13 @@ export const usePokemons = () => {
   };
 
   useEffect(() => {
-    getPokemons();
+    if (!isMounted) return;
+    else {
+      getPokemons();
+    }
+    return () => {
+      isMounted.current = false;
+    };
   }, []);
 
   return {
