@@ -162,13 +162,10 @@ const PokeDetailScreen = ({route, navigation}: Props) => {
                   );
                 })}
               </View>
-              <View
-                style={{
-                  ...styles.sectionContainer,
-                }}>
+              <View style={[styles.sectionContainer, styles.globalMargin]}>
                 <Text style={styles.title}>Moves</Text>
 
-                <View style={[styles.sectionContainer, styles.globalMargin]}>
+                <View style={styles.movesContainer}>
                   {pokemonDetail?.moves.map((m, i) => {
                     return (
                       <View
