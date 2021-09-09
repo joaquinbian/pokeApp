@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Button} from 'react-native-elements';
@@ -9,16 +10,21 @@ interface Props {
   name: string;
 }
 const HeaderScreen = ({color, image, name}: Props) => {
+  const navigation = useNavigation();
   return (
     <View style={{backgroundColor: color, ...styles.headerContainer}}>
-      <View style={{backgroundColor: 'red'}}>
-        <TouchableOpacity activeOpacity={0.9}>
-          <Icon name="chevron-back-outline" color="#fff" size={35} />
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity
+        activeOpacity={0.9}
+        style={{paddingLeft: 5}}
+        onPress={() => navigation.goBack()}>
+        <Icon name="chevron-back-outline" color="#fff" size={35} />
+      </TouchableOpacity>
 
       <Text style={styles.name}>{name}</Text>
-      <Image source={{uri: image}} style={{width: 40, height: 40}} />
+      <Image
+        source={{uri: image}}
+        style={{width: 40, height: 40, marginRight: 5}}
+      />
     </View>
   );
 };
@@ -28,9 +34,12 @@ export default HeaderScreen;
 const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   name: {
     color: '#fff',
     fontSize: 20,
+    fontWeight: 'bold',
   },
 });

@@ -67,8 +67,6 @@ const PokeDetailScreen = ({route, navigation}: Props) => {
       <ScrollView
         onScroll={e => {
           scrollY.current.setValue({x: 0, y: e.nativeEvent.contentOffset.y});
-          // console.log(e.nativeEvent.contentOffset.y)
-          console.log(scrollY.current);
         }}
         // stickyHeaderIndices={[1]} //le pasamos el indice del child que queremos que quede fixed
       >
@@ -84,11 +82,8 @@ const PokeDetailScreen = ({route, navigation}: Props) => {
         />
         <Animated.View
           style={{
-            // top: translateY,
-            // top: -10,
             transform: [{translateY}],
-            // top: translateY,
-            zIndex: 2000,
+            ...styles.animatedHeader,
           }}>
           <HeaderScreen color={colorSecondary} name={name} image={picture} />
         </Animated.View>
@@ -221,5 +216,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 10,
     marginLeft: 10,
+    // top: 0,
+  },
+  animatedHeader: {
+    zIndex: 2000,
+    shadowColor: '#000',
+    position: 'absolute',
+    // backgroundColor: 'red',
+    width: '100%',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65,
+
+    elevation: 7,
   },
 });
