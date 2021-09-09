@@ -16,6 +16,7 @@ import {Button} from 'react-native-elements';
 import usePokemonDetail from '../hooks/usePokemonDetail';
 import {RootStackParams} from '../navigator/StackNavigator';
 import HeaderScreen from '../components/HeaderScreen';
+import FadeImage from '../components/FadeImage';
 
 interface Props extends StackScreenProps<RootStackParams, 'DetailPokemon'> {}
 
@@ -112,7 +113,7 @@ const PokeDetailScreen = ({route, navigation}: Props) => {
           <Text style={{...styles.title, fontSize: 30}}>{name}</Text>
         </View>
 
-        {!pokemonDetail ? (
+        {isLoading ? (
           <LoadingPokemons />
         ) : (
           <View>
@@ -123,7 +124,7 @@ const PokeDetailScreen = ({route, navigation}: Props) => {
               </View>
               <View style={styles.sectionContainer}>
                 <Text style={styles.title}>Types</Text>
-                {pokemonDetail.types.map((t, i) => {
+                {pokemonDetail?.types.map((t, i) => {
                   return (
                     <View
                       key={i}
@@ -139,9 +140,9 @@ const PokeDetailScreen = ({route, navigation}: Props) => {
                 <ScrollView horizontal>
                   {pokemonDetail?.sprites.map((s, i) => {
                     return (
-                      <Image
+                      <FadeImage
                         key={i}
-                        source={{uri: s}}
+                        uri={s}
                         style={{width: 100, height: 100}}
                       />
                     );

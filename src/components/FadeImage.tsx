@@ -16,16 +16,16 @@ interface Props {
   style: StyleProp<ImageStyle>;
 }
 const FadeImage = ({uri, style = {}}: Props) => {
-  const {fadeIn, opacity, position, startMoving} = useFadeIn();
+  const {fadeIn, opacity, position: top, startMoving} = useFadeIn();
   const [isLoading, setIsLoading] = useState(true);
 
   const setImageLoaded = () => {
     setIsLoading(false);
     fadeIn();
-    startMoving(-50);
+    startMoving(-20);
   };
   return (
-    <Animated.View style={{top: position, ...(style as any)}}>
+    <Animated.View style={{top, ...(style as any)}}>
       {isLoading && <ActivityIndicator color="red" size={25} />}
       <Animated.Image
         onLoadEnd={setImageLoaded}

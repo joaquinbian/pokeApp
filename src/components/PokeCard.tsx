@@ -133,6 +133,6 @@ const styles = StyleSheet.create({
     height: 110,
     position: 'absolute',
     right: 25,
-    top: 10,
+    top: 10, //por esto la animacion no cae, y solo hace el efecto de fadeIN
   },
 });
