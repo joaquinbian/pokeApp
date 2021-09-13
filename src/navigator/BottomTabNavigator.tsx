@@ -1,5 +1,5 @@
 import React from 'react';
-import {Platform, StyleSheet} from 'react-native';
+import {Appearance, AppRegistry, Platform, StyleSheet} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {BlurView} from 'expo-blur';
@@ -17,18 +17,11 @@ const BottomTabNavigator = () => {
           marginBottom: Platform.OS === 'android' ? 10 : 0,
         },
         tabBarStyle: {
-          // backgroundColor: 'red',
+          backgroundColor: 'rgba(255,255,255,0.9)',
           borderWidth: 0,
           elevation: 0,
           position: 'absolute',
         },
-        tabBarBackground: () => (
-          <BlurView
-            tint="light"
-            intensity={100}
-            style={{...StyleSheet.absoluteFillObject}}
-          />
-        ),
       }}>
       <TabNavigator.Screen
         name="home"
