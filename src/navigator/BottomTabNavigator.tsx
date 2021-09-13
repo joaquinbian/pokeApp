@@ -1,8 +1,10 @@
 import React from 'react';
+import {Platform, StyleSheet} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import StackNavigator from './StackNavigator';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {BlurView} from 'expo-blur';
 import SearchScreen from '../screens/SearchScreen';
-import {Platform} from 'react-native';
+import StackNavigator from './StackNavigator';
 
 const TabNavigator = createBottomTabNavigator();
 const BottomTabNavigator = () => {
@@ -14,9 +16,38 @@ const BottomTabNavigator = () => {
         tabBarLabelStyle: {
           marginBottom: Platform.OS === 'android' ? 10 : 0,
         },
+        tabBarStyle: {
+          // backgroundColor: 'red',
+          borderWidth: 0,
+          elevation: 0,
+          position: 'absolute',
+        },
+        tabBarBackground: () => (
+          <BlurView
+            tint="light"
+            intensity={100}
+            style={{...StyleSheet.absoluteFillObject}}
+          />
+        ),
       }}>
-      <TabNavigator.Screen name="home" component={StackNavigator} />
-      <TabNavigator.Screen name="search" component={SearchScreen} />
+      <TabNavigator.Screen
+        name="home"
+        component={StackNavigator}
+        options={{
+          tabBarIcon: ({color}) => (
+            <Icon name="list-outline" color={color} size={20} />
+          ),
+        }}
+      />
+      <TabNavigator.Screen
+        name="search"
+        component={SearchScreen}
+        options={{
+          tabBarIcon: ({color}) => (
+            <Icon name="search-outline" color={color} size={20} />
+          ),
+        }}
+      />
     </TabNavigator.Navigator>
   );
 };
