@@ -1,16 +1,32 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {
+  StyleProp,
+  StyleSheet,
+  Text,
+  TextStyle,
+  View,
+  ViewStyle,
+} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import usePokemonSearch from '../hooks/usePokemonSearch';
 
-const InputSearch = () => {
+interface Props {
+  style?: StyleProp<ViewStyle> | StyleProp<TextStyle>;
+}
+
+const InputSearch = ({style}: Props) => {
   const [textInput, setTextInput] = useState('');
   console.log(textInput);
   //   usePokemonSearch();
 
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        ...styles.container,
+        ...(style as any), //eso puede venir nulo, entonces, lo que hacemos es ponerle el as any
+        //como diciendo, confia
+      }}>
       <View style={styles.inputContainer}>
         <TextInput
           style={{
@@ -41,7 +57,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     backgroundColor: 'white',
     width: '90%',
-    marginVertical: 5,
+    // marginVertical: 5,
     height: 40,
     paddingHorizontal: 5,
     borderRadius: 15,
