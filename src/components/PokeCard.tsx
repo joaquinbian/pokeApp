@@ -47,7 +47,6 @@ const PokeCard = ({pokemon}: Props) => {
     //esta funcion se ejecuta cuando el componente se desmonta
     return () => {
       console.log('me desmonto');
-
       isMounted.current = false;
     };
   }, []);
