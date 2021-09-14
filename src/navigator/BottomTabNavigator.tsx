@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {BlurView} from 'expo-blur';
 import SearchScreen from '../screens/SearchScreen';
 import StackNavigator from './StackNavigator';
+import StackSearchScreen from './StackSearchScreen';
 
 const TabNavigator = createBottomTabNavigator();
 const BottomTabNavigator = () => {
@@ -34,7 +35,7 @@ const BottomTabNavigator = () => {
       />
       <TabNavigator.Screen
         name="search"
-        component={SearchScreen}
+        component={StackSearchScreen}
         options={{
           tabBarIcon: ({color}) => (
             <Icon name="search-outline" color={color} size={20} />

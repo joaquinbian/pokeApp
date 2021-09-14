@@ -28,7 +28,9 @@ const SearchScreen = () => {
   useEffect(() => {
     if (term.length > 0) {
       setPokeFiltered(
-        simplePokemons.filter(p => p.name.includes(term.toLowerCase())),
+        simplePokemons.filter(p =>
+          p.name.toLowerCase().includes(term.toLowerCase()),
+        ),
       );
     } else {
       setPokeFiltered(simplePokemons);
