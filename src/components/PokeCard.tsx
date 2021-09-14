@@ -26,10 +26,11 @@ const PokeCard = ({pokemon}: Props) => {
   });
 
   const {primary, secondary} = colors;
-  const isMounted = useRef<boolean>(true);
+  const isMounted = useRef(true);
   //por defecto es true, porque si se construye es porque esta montado
 
   const getImageColors = async () => {
+    if (!isMounted) return;
     const {colorPrimary, colorSecondary} = await getColors(pokemon.picture);
     setColors({
       primary: colorPrimary || 'gray',

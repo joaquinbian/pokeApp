@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -19,9 +19,16 @@ const SearchScreen = () => {
   const {top} = useSafeAreaInsets();
   const {isFetching, simplePokemons} = usePokemonSearch();
   const {width} = useWindowDimensions();
+  const [term, setTerm] = useState('');
+
+  useEffect(() => {
+    console.log({term});
+  }, [term]);
+
   return (
     <View style={{top, ...styles.container}}>
       <InputSearch
+        onDebounce={value => setTerm(value)}
         style={{
           position: 'absolute',
           zIndex: 1000,
@@ -36,6 +43,7 @@ const SearchScreen = () => {
             <PokeCard pokemon={item} />
           )}
           keyExtractor={item => item.id}
+          ListHeaderComponent={() => <Text style={styles.title}>{term}</Text>}
           style={{paddingTop: top + 55}}
           showsVerticalScrollIndicator={false}
           ItemSeparatorComponent={() => <View style={{marginBottom: 15}} />}
@@ -56,6 +64,12 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     marginHorizontal: 10,
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 30,
+    marginHorizontal: 10,
+    marginBottom: 5,
   },
 });
 

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleProp,
   StyleSheet,
@@ -10,15 +10,22 @@ import {
 import {TextInput} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import usePokemonSearch from '../hooks/usePokemonSearch';
+import {useDebounced} from '../hooks/useDebounced';
 
 interface Props {
+  onDebounce: (value: any) => void;
   style?: StyleProp<ViewStyle> | StyleProp<TextStyle>;
 }
 
-const InputSearch = ({style}: Props) => {
+const InputSearch = ({style, onDebounce}: Props) => {
   const [textInput, setTextInput] = useState('');
-  console.log(textInput);
+  // console.log(textInput);
   //   usePokemonSearch();
+  const debouncedValue = useDebounced(textInput);
+
+  useEffect(() => {
+    onDebounce(debouncedValue);
+  }, [debouncedValue]);
 
   return (
     <View
