@@ -7,7 +7,7 @@ import {
 } from '../interfaces/pokemonsInterface';
 
 const usePokemonSearch = () => {
-  const [isFetching, setIsFetching] = useState(false);
+  const [isFetching, setIsFetching] = useState<boolean>(false);
   const [simplePokemons, setSimplePokemons] = useState<SimplePokemon[]>([]);
 
   const loadPokemons = async () => {
@@ -29,7 +29,10 @@ const usePokemonSearch = () => {
         name: p.name,
       };
     });
-    setSimplePokemons(newArr);
+    setTimeout(() => {
+      setSimplePokemons(newArr);
+      setIsFetching(false);
+    }, 1500);
   };
   useEffect(() => {
     loadPokemons();
