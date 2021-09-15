@@ -44,8 +44,7 @@ export const usePokemons = () => {
   };
 
   useEffect(() => {
-    if (!isMounted) return;
-    else {
+    if (isMounted.current) {
       getPokemons();
     }
     return () => {

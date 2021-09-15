@@ -19,7 +19,6 @@ interface Props {
 const PokeCard = ({pokemon}: Props) => {
   const {width} = useWindowDimensions();
   const navigation = useNavigation();
-  // const [bgColor, setBgColor] = useState('');
   const [colors, setColors] = useState({
     primary: '',
     secondary: '',
@@ -30,24 +29,25 @@ const PokeCard = ({pokemon}: Props) => {
   //por defecto es true, porque si se construye es porque esta montado
 
   const getImageColors = async () => {
-    if (!isMounted) return;
     const {colorPrimary, colorSecondary} = await getColors(pokemon.picture);
-    setColors({
-      primary: colorPrimary || 'gray',
-      secondary: colorSecondary || 'gray',
-    });
+    if (isMounted.current) {
+      setColors({
+        primary: colorPrimary || 'gray',
+        secondary: colorSecondary || 'gray',
+      });
+    }
   };
 
   useEffect(() => {
     //si el componente no esta montado, que retorne
-    if (!isMounted) return;
-    else {
+    if (isMounted.current) {
+      console.log('entro y ejecuto getColors');
+
       getImageColors();
     }
 
     //esta funcion se ejecuta cuando el componente se desmonta
     return () => {
-      console.log('me desmonto');
       isMounted.current = false;
     };
   }, []);
@@ -87,7 +87,6 @@ export default PokeCard;
 
 const styles = StyleSheet.create({
   cardContainer: {
-    // marginHorizontal: 20,
     marginBottom: 20,
     height: 120,
     width: 140,
@@ -102,7 +101,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
 
     elevation: 6,
-    // overflow: 'hidden',
   },
   name: {
     color: '#fff',

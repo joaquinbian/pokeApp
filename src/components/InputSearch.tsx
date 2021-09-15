@@ -19,8 +19,7 @@ interface Props {
 
 const InputSearch = ({style, onDebounce}: Props) => {
   const [textInput, setTextInput] = useState('');
-  // console.log(textInput);
-  //   usePokemonSearch();
+
   const debouncedValue = useDebounced(textInput);
 
   useEffect(() => {

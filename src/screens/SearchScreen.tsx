@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   View,
   Text,
@@ -6,9 +6,11 @@ import {
   useWindowDimensions,
   Platform,
   ActivityIndicator,
+  FlatList,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
-import {SocialIcon} from 'react-native-elements/dist/social/SocialIcon';
-import {FlatList} from 'react-native-gesture-handler';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import InputSearch from '../components/InputSearch';
@@ -22,8 +24,7 @@ const SearchScreen = () => {
   const {isFetching, simplePokemons} = usePokemonSearch();
   const [term, setTerm] = useState('');
   const [pokeFiltered, setPokeFiltered] = useState<SimplePokemon[]>([]);
-
-  console.log(pokeFiltered.length, simplePokemons.length);
+  const flatList = useRef<FlatList<any>>(null);
 
   useEffect(() => {
     if (term.length > 0) {
@@ -35,6 +36,8 @@ const SearchScreen = () => {
     } else {
       setPokeFiltered(simplePokemons);
     }
+    pokeFiltered.length &&
+      flatList.current?.scrollToIndex({index: 0, animated: false});
   }, [term, isFetching]);
 
   if (isFetching) {
@@ -46,39 +49,46 @@ const SearchScreen = () => {
     );
   }
   return (
-    <View style={{top, ...styles.container}}>
-      <InputSearch
-        onDebounce={value => setTerm(value)}
-        style={{
-          position: 'absolute',
-          zIndex: 1000,
-          width,
-          top: Platform.OS === 'android' ? top + 5 : top,
-        }}
-      />
+    <KeyboardAvoidingView
+      style={{top, ...styles.container}}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View>
+          <InputSearch
+            onDebounce={value => setTerm(value)}
+            style={{
+              position: 'absolute',
+              zIndex: 1000,
+              width,
+              top: Platform.OS === 'android' ? top + 5 : top,
+            }}
+          />
 
-      <View style={{marginHorizontal: 10}}>
-        <FlatList
-          data={pokeFiltered}
-          renderItem={({item}: {item: SimplePokemon}) => (
-            <PokeCard pokemon={item} />
-          )}
-          keyExtractor={item => item.id}
-          ListHeaderComponent={() =>
-            term.length ? <Text style={styles.title}>{term}</Text> : null
-          }
-          ListFooterComponent={() => <View style={{marginBottom: 90}} />}
-          style={{paddingTop: top + 55}}
-          showsVerticalScrollIndicator={false}
-          ItemSeparatorComponent={() => <View style={{marginBottom: 15}} />}
-          numColumns={2}
-          columnWrapperStyle={{
-            justifyContent: 'space-around',
-          }}
-          progressViewOffset={3}
-        />
-      </View>
-    </View>
+          <View style={{marginHorizontal: 10}}>
+            <FlatList
+              data={pokeFiltered}
+              renderItem={({item}: {item: SimplePokemon}) => (
+                <PokeCard pokemon={item} />
+              )}
+              keyExtractor={item => item.id}
+              ListHeaderComponent={() =>
+                term.length ? <Text style={styles.title}>{term}</Text> : null
+              }
+              ListFooterComponent={() => <View style={{marginBottom: 90}} />}
+              style={{paddingTop: top + 55}}
+              showsVerticalScrollIndicator={false}
+              ItemSeparatorComponent={() => <View style={{marginBottom: 15}} />}
+              numColumns={2}
+              columnWrapperStyle={{
+                justifyContent: 'space-around',
+              }}
+              progressViewOffset={3}
+              ref={flatList}
+            />
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
