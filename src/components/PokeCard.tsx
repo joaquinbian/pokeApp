@@ -16,6 +16,8 @@ interface Props {
   pokemon: SimplePokemon;
 }
 
+//a
+
 const PokeCard = ({pokemon}: Props) => {
   const {width} = useWindowDimensions();
   const navigation = useNavigation();
