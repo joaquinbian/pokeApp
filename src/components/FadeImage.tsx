@@ -28,7 +28,7 @@ const FadeImage = ({uri, style = {}}: Props) => {
   const LoadImage = () => {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator color="red" size={25} />
+        <ActivityIndicator color="gray" size={25} />
       </View>
     );
   };

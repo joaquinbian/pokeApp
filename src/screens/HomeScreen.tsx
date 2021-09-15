@@ -50,7 +50,9 @@ const HomeScreen = ({navigation}: Props) => {
                   height: 85,
                   alignItems: 'center',
                 }}>
-                {isLoading ? <ActivityIndicator color="red" size={25} /> : null}
+                {isLoading ? (
+                  <ActivityIndicator color="yellow" size={25} />
+                ) : null}
               </View>
             );
           }}

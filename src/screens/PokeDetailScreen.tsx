@@ -64,7 +64,7 @@ const PokeDetailScreen = ({route, navigation}: Props) => {
   };
 
   return (
-    <View>
+    <View style={{flex: 1, marginBottom: 40}}>
       <ScrollView
         onScroll={e => {
           scrollY.current.setValue({x: 0, y: e.nativeEvent.contentOffset.y});
