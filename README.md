@@ -3,9 +3,9 @@
   <h3>How to run this app</h3>
   <ul>
     <li>Clone the repo</li>
-    <li>In the root of the project, excecute <strong>npm install</strong> to install the dependences</li> 
+    <li>In the root of the project, run <strong>npm install</strong> to install the dependences</li> 
     <li>If you have an emulator in your machine, you can go to the next step, but if you want to try it with your mobile phone, first you have yo know that you need to set the USB debuggin on, if you have an andorid device, you can follow <a href="https://www.microfocus.com/documentation/silk-test/210/en/silktestworkbench-help-en/GUID-BE1EA2BA-EFF2-4B2D-8F09-4BEE0947DFB2.html">this tutorial</a></li>
-    <li>Then, if your are in linux, open two terminals in the root of the project, first excecute <strong>npm start</strong> in one terminal and then, once metro starts, excecute <strong>npx react-native run android/ios</strong></li>
+    <li>Then, if your are in linux, open two terminals in the root of the project, first run <strong>npm start</strong> in one terminal and then, once metro starts, run <strong>npx react-native run android/ios</strong></li>
   </ul>
  
   <div>
