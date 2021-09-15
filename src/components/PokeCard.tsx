@@ -68,7 +68,7 @@ const PokeCard = ({pokemon}: Props) => {
           width: width * 0.4,
           backgroundColor: primary,
         }}>
-        <View>
+        <View style={{width: 140}}>
           <Text style={styles.name}>{pokemon.name}</Text>
         </View>
         <View style={styles.imagePokebolaContainer}>
@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
 
     elevation: 6,
+    flexWrap: 'wrap',
   },
   name: {
     color: '#fff',
