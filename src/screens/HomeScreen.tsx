@@ -13,9 +13,9 @@ import {usePokemons} from '../hooks/usePokemons';
 import {Result, SimplePokemon} from '../interfaces/pokemonsInterface';
 import PokeCard from '../components/PokeCard';
 
-interface Props extends StackScreenProps<any, any> {}
+// interface Props extends StackScreenProps<any, any> {}
 
-const HomeScreen = ({navigation}: Props) => {
+const HomeScreen = () => {
   const {top} = useSafeAreaInsets();
   const {getPokemons, simplePokemons, isLoading} = usePokemons();
 

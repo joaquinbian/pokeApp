@@ -17,6 +17,7 @@ import usePokemonDetail from '../hooks/usePokemonDetail';
 import {RootStackParams} from '../navigator/StackNavigator';
 import HeaderScreen from '../components/HeaderScreen';
 import FadeImage from '../components/FadeImage';
+import LoadingPokemons from '../components/LoadingPokemons';
 
 interface Props extends StackScreenProps<RootStackParams, 'DetailPokemon'> {}
 
@@ -54,15 +55,6 @@ const PokeDetailScreen = ({route, navigation}: Props) => {
     );
   };
 
-  const LoadingPokemons = () => {
-    return (
-      <View style={styles.loadingPokemonsContainer}>
-        <ActivityIndicator size={30} color={colorPrimary} />
-        <Text>Loading {name} info</Text>
-      </View>
-    );
-  };
-
   return (
     <View style={{flex: 1, marginBottom: 40}}>
       <ScrollView
@@ -71,6 +63,7 @@ const PokeDetailScreen = ({route, navigation}: Props) => {
         }}
         // stickyHeaderIndices={[1]} //le pasamos el indice del child que queremos que quede fixed
       >
+        {/* background del pokemon */}
         <View
           style={{
             backgroundColor: colorPrimary,
@@ -81,6 +74,7 @@ const PokeDetailScreen = ({route, navigation}: Props) => {
             borderBottomLeftRadius: 1000,
           }}
         />
+
         <Animated.View
           style={{
             transform: [{translateY}],
@@ -88,10 +82,8 @@ const PokeDetailScreen = ({route, navigation}: Props) => {
           }}>
           <HeaderScreen color={colorSecondary} name={name} image={picture} />
         </Animated.View>
-        <View
-          style={{
-            ...styles.header,
-          }}>
+
+        <View style={styles.header}>
           <Button
             title="Back"
             buttonStyle={{
@@ -114,7 +106,7 @@ const PokeDetailScreen = ({route, navigation}: Props) => {
         </View>
 
         {isLoading ? (
-          <LoadingPokemons />
+          <LoadingPokemons colorPrimary={colorPrimary} name={name} />
         ) : (
           <View>
             <View>

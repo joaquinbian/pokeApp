@@ -27,7 +27,6 @@ export const usePokemons = () => {
   const mapPokemonList = (pokeList: Result[]) => {
     const newPokeArr: SimplePokemon[] = pokeList.map(p => {
       const urlArr = p.url.split('/');
-      // console.log(urlArr[urlArr.length - 2], 'a');
       const id = urlArr[urlArr.length - 2];
 
       const picture = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;

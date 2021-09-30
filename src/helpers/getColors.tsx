@@ -15,7 +15,7 @@ export const getColors = async (uri: string) => {
       colorSecondary = colors.primary;
     }
   } catch (err) {
-    // console.log(err);
+    console.log(err);
   }
 
   return {colorPrimary, colorSecondary};

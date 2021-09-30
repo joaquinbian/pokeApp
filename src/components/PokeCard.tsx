@@ -16,8 +16,6 @@ interface Props {
   pokemon: SimplePokemon;
 }
 
-//a
-
 const PokeCard = ({pokemon}: Props) => {
   const {width} = useWindowDimensions();
   const navigation = useNavigation();
@@ -28,7 +26,6 @@ const PokeCard = ({pokemon}: Props) => {
 
   const {primary, secondary} = colors;
   const isMounted = useRef(true);
-  //por defecto es true, porque si se construye es porque esta montado
 
   const getImageColors = async () => {
     const {colorPrimary, colorSecondary} = await getColors(pokemon.picture);
@@ -41,14 +38,10 @@ const PokeCard = ({pokemon}: Props) => {
   };
 
   useEffect(() => {
-    //si el componente no esta montado, que retorne
     if (isMounted.current) {
-      console.log('entro y ejecuto getColors');
-
       getImageColors();
     }
 
-    //esta funcion se ejecuta cuando el componente se desmonta
     return () => {
       isMounted.current = false;
     };

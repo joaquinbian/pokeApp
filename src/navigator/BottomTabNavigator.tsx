@@ -13,7 +13,7 @@ const BottomTabNavigator = () => {
     <TabNavigator.Navigator
       screenOptions={{
         headerShown: false,
-        //el tabBarLabel son los titulitos del menu
+        //el tabBarLabel son los titulos del menu
         tabBarLabelStyle: {
           marginBottom: Platform.OS === 'android' ? 10 : 0,
         },
